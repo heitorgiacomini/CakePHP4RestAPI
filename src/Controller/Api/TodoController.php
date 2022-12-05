@@ -59,13 +59,21 @@ class TodoController extends AppController
 
         $todo = $this->Todo->get($emp_id);
 
-        $this->set([
-            "status" => true,
-            "message" => "Todo",
-            "data" => $todo
-        ]);
+        $content = json_encode($todo);
 
-        $this->viewBuilder()->setOption("serialize", ["status", "message", "data"]);
+        $this->response = $this->response->withStringBody($content);
+        $this->response = $this->response->withType('json');
+        // ...
+
+        return $this->response;
+
+        // $this->set([
+        //     "status" => true,
+        //     "message" => "Todo",
+        //     "data" => $todo
+        // ]);
+
+        // $this->viewBuilder()->setOption("serialize", ["status", "message", "data"]);
     }
 
     // List todo api
@@ -75,13 +83,22 @@ class TodoController extends AppController
 
         $todo = $this->Todo->find()->toList();
 
-        $this->set([
-            "status" => true,
-            "message" => "Todo list",
-            "data" => $todo
-        ]);
+        // $this->set(["a" => $todo]);
 
-        $this->viewBuilder()->setOption("serialize", ["status", "message", "data"]);
+        // $this->viewBuilder()->setOption("serialize", ["data"]);
+
+        // $this->set(['my_response' => $todo]);
+
+        // $this->viewBuilder()->setOption('serialize', true);
+        // $this->RequestHandler->renderAs($this, 'json');
+
+        $content = json_encode($todo);
+
+        $this->response = $this->response->withStringBody($content);
+        $this->response = $this->response->withType('json');
+        // ...
+
+        return $this->response;
     }
 
     // Update todo
